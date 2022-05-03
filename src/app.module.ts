@@ -1,13 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { CustomerModule } from './customer/customer.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseModule } from './database/database.module';
-import { TaskModule } from './task-module/task.module';
+import { User } from './database/entity/user.entity';
+import { UserHttpModule } from './user-module/users-http.module';
 
 @Module({
-  imports: [TaskModule, DatabaseModule, CustomerModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [DatabaseModule, UserHttpModule],
 })
 export class AppModule {}
