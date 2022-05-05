@@ -36,7 +36,10 @@ export class UserController {
     return this.userService.getUser(id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard
+    
+    
+    )
   @Post()
   @UsePipes(ValidationPipe)
   async addUser(@Body() user: CreateUserDto): Promise<any> {
