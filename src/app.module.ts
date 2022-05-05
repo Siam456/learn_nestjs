@@ -1,11 +1,13 @@
-/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
-import { User } from './database/entity/user.entity';
-import { UserHttpModule } from './user-module/users-http.module';
+import { AuthModule } from './services/auth/auth.module';
+import { UserModule } from './user-module/user.module';
 
 @Module({
-  imports: [DatabaseModule, UserHttpModule],
+  imports: [UserModule, DatabaseModule, AuthModule],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
