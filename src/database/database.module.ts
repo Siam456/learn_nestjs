@@ -1,8 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Customer } from './entity/customer.entitiy';
-import { User } from './entity/user.entity';
+import { User } from 'src/entity/user.entity';
 
 @Module({
   imports: [
@@ -15,8 +14,9 @@ import { User } from './entity/user.entity';
       database: 'test',
       entities: [User],
       synchronize: true,
-      autoLoadEntities: true,
     }),
   ],
+  controllers: [],
+  providers: [],
 })
 export class DatabaseModule {}
