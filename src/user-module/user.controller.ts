@@ -14,8 +14,8 @@ import {
 import { UserService } from './user.service';
 import { Request } from 'express';
 import { CreateUserDto } from './dto/user.dto';
-import { LoacalAuthGuard } from 'src/services/auth/local-auth.guard';
-import { JwtAuthGuard } from 'src/services/auth/jwt-auth.guard';
+import { LoacalAuthGuard } from 'src/services/auth/guards/local-auth.guard';
+import { JwtAuthGuard } from 'src/services/auth/guards/jwt-auth.guard';
 
 @Controller('user')
 export class UserController {
