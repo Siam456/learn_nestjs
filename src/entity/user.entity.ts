@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-enum UserRole {
-  admit = 'admin',
+export enum UserRole {
+  admin = 'admin',
   user = 'user',
   ghost = 'ghost',
 }
