@@ -1,4 +1,13 @@
-import { Controller, Get, Request, Post, UseGuards, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Request,
+  Post,
+  UseGuards,
+  Res,
+  UseInterceptors,
+  UploadedFile,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './services/auth/auth.services';
@@ -7,6 +16,8 @@ import { Response } from 'express';
 import { Roles } from './services/auth/decorators/roles.decorator';
 import { UserRole } from './entity/user.entity';
 import { RolesGuard } from './services/auth/guards/roles.guard';
+import { Express } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller()
 export class AppController {
@@ -22,14 +33,23 @@ export class AppController {
 
   @UseGuards(AuthGuard('local'))
   @Post('auth/login')
-  async login(@Request() req, @Res() res: Response) {
+  async login(@Request() req: any, @Res() res: Response) {
     return this.authService.login(req.user, res);
   }
 
   @Roles(UserRole.ghost, UserRole.user)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('profile')
-  getProfile(@Request() req) {
+  getProfile(@Request() req: any) {
     return req.user;
+  }
+
+  //file upload
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file', { dest: './uploads' }))
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+    console.log(file);
+
+    return 'file';
   }
 }
