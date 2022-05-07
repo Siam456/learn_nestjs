@@ -7,6 +7,7 @@ import {
   Res,
   UseInterceptors,
   UploadedFile,
+  UploadedFiles,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -17,7 +18,11 @@ import { Roles } from './services/auth/decorators/roles.decorator';
 import { UserRole } from './entity/user.entity';
 import { RolesGuard } from './services/auth/guards/roles.guard';
 import { Express } from 'express';
-import { FileInterceptor } from '@nestjs/platform-express';
+import {
+  FileFieldsInterceptor,
+  FileInterceptor,
+} from '@nestjs/platform-express';
+import multer from 'multer';
 
 @Controller()
 export class AppController {
@@ -46,10 +51,28 @@ export class AppController {
 
   //file upload
   @Post('upload')
-  @UseInterceptors(FileInterceptor('file', { dest: './uploads' }))
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    console.log(file);
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadFile(@UploadedFile() file: Express.Multer.File) {
+    // console.log(file);
+    return file.originalname;
+  }
 
-    return 'file';
+  @Post('uploads')
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'files', maxCount: 2 },
+      { name: 'txt', maxCount: 1 },
+    ]),
+  )
+  async uploadFiles(
+    @UploadedFiles()
+    files: {
+      files?: Express.Multer.File[];
+      background?: Express.Multer.File[];
+    },
+  ): Promise<any> {
+    // console.log(files);
+
+    return Promise.resolve(files[0].originalname);
   }
 }
