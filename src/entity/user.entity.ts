@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { PetEntity } from './pet.entity';
 
 export enum UserRole {
   admin = 'admin',
@@ -43,4 +44,7 @@ export class User {
     default: UserRole.user,
   })
   role: string;
+
+  @OneToMany(() => PetEntity, (pet) => pet.owner)
+  pets: PetEntity[];
 }
