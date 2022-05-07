@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PetEntity } from 'src/entity/pet.entity';
 import { User } from 'src/entity/user.entity';
 
 @Module({
@@ -12,7 +13,7 @@ import { User } from 'src/entity/user.entity';
       username: 'root',
       password: '',
       database: 'test',
-      entities: [User],
+      entities: [User, PetEntity],
       synchronize: true,
     }),
   ],
