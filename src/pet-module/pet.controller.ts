@@ -8,12 +8,21 @@ import {
   Post,
   Req,
   Request,
+  UploadedFiles,
   UseGuards,
+  UseInterceptors,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import {
+  FileFieldsInterceptor,
+  FilesInterceptor,
+} from '@nestjs/platform-express/multer';
+import { diskStorage } from 'multer';
 import { PetEntity } from 'src/entity/pet.entity';
 import { JwtAuthGuard } from 'src/services/auth/guards/jwt-auth.guard';
+import { editFileName, imageFileFilter } from 'src/util/file_ext';
+import { Uploader } from 'src/util/Uploader';
 import { PetDto } from './dto/pet.dto';
 import { PetService } from './pet.service';
 
@@ -33,9 +42,19 @@ export class PetController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @UseInterceptors(FilesInterceptor('files', 3, Uploader))
   @Post()
-  async addPet(@Body() body: PetDto, @Request() req): Promise<any> {
-    return this.petService.addPet(body, req.user);
+  async addPet(
+    @Body() body: PetDto,
+    @Request() req,
+    @UploadedFiles()
+    files: {
+      files?: Express.Multer.File[];
+    },
+  ): Promise<any> {
+    // console.log(body);
+
+    return this.petService.addPet(body, req.user, files);
   }
 
   @Delete('/:id')

@@ -71,8 +71,8 @@ export class AppController {
       background?: Express.Multer.File[];
     },
   ): Promise<any> {
-    // console.log(files);
+    console.log(files);
 
-    return Promise.resolve(files[0].originalname);
+    return 'siam';
   }
 }

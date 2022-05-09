@@ -27,9 +27,7 @@ import * as path from 'path';
       }),
       limits: { fileSize: 1000000 },
       fileFilter: (req, file, cb) => {
-        console.log(file);
-
-        if (file.fieldname === 'files') {
+        if (file.fieldname === 'files' || file.fieldname === 'file') {
           if (
             file.mimetype === 'image/png' ||
             file.mimetype === 'image/jpg' ||
@@ -61,8 +59,7 @@ import * as path from 'path';
       },
     }),
   ],
-
   controllers: [],
   providers: [],
 })
-export class UploaderModule {}
+export class FileUploader {}

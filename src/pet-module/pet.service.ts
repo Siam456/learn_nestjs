@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UploadedFiles } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Request } from 'express';
 import { PetEntity } from 'src/entity/pet.entity';
@@ -28,11 +28,19 @@ export class PetService {
     return await this.petRepository.findOne(id);
   }
 
-  async addPet(pet: PetDto, user: any): Promise<any> {
+  async addPet(pet: PetDto, user: any, files: any): Promise<any> {
     // newPet.ownerId = user.id;
+    // console.log(files);
+    const photo = [];
+
+    files.forEach((element: any) => {
+      photo.push(element.filename);
+    });
+
     const newPet = {
       ...pet,
       owner: user,
+      photo: photo,
     };
 
     const response = await this.petRepository.save(newPet);

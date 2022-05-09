@@ -1,5 +1,11 @@
 /* eslint-disable prettier/prettier */
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  Unique,
+} from 'typeorm';
 import { PetEntity } from './pet.entity';
 
 export enum UserRole {
@@ -9,6 +15,7 @@ export enum UserRole {
 }
 
 @Entity()
+@Unique(['email'])
 export class User {
   @PrimaryGeneratedColumn({
     type: 'bigint',
