@@ -1,25 +1,11 @@
-import {
-  BadRequestException,
-  HttpException,
-  HttpStatus,
-  Module,
-} from '@nestjs/common';
+/* eslint-disable prettier/prettier */
+import { HttpException, HttpStatus, Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { DatabaseModule } from './database/database.module';
-import { PetModule } from './pet-module/pet.module';
-import { AuthModule } from './services/auth/auth.module';
-import { UserModule } from './user-module/user.module';
 import * as path from 'path';
 
 @Module({
   imports: [
-    UserModule,
-    DatabaseModule,
-    AuthModule,
-    PetModule,
     MulterModule.register({
       storage: diskStorage({
         destination: (req, file, cb) => {
@@ -73,7 +59,7 @@ import * as path from 'path';
       },
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
-export class AppModule {}
+export class FileUploader {}

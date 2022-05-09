@@ -22,6 +22,9 @@ export class PetEntity {
   })
   name: string;
 
+  @Column({ type: 'simple-array', nullable: false })
+  photo: string[];
+
   @ManyToOne(() => User, (user) => user.pets)
   owner: User;
 }
